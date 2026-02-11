@@ -1,0 +1,6 @@
+# compiled output
+node_modules
+dist
+
+# environment configuration
+*.env

@@ -1,0 +1,30 @@
+{
+  "name": "code-guardian-service",
+  "version": "0.0.1",
+  "author": "Oleksii Salimonenko",
+  "private": true,
+  "license": "ISC",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/main.ts",
+    "build": "tsc",
+    "start": "node --max-old-space-size=150 dist/main.js"
+  },
+  "config": {
+    "tsFiles": "{src,test}/**/*.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "dotenv": "^17.2.4",
+    "fastify": "^5.7.4",
+    "stream-json": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.2",
+    "@types/stream-json": "^1.7.8",
+    "cross-env": "^10.1.0",
+    "dotenv-cli": "^11.0.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
