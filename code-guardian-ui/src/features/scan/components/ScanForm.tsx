@@ -1,32 +1,41 @@
-import { Button } from "@/features/system/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/features/system/components/ui/card";
-import { Input } from "@/features/system/components/ui/input";
-import { Label } from "@/features/system/components/ui/label";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/features/system/components/ui/alert";
-import { Progress } from "@/features/system/components/ui/progress";
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
 import { Loader2 } from "lucide-react";
 import { progressFor } from "../utils/progress";
+import { ApiModeSwitch } from "@/components/ui/api-mode-switch";
+import { ApiMode } from "@/types";
 
 export function ScanForm(props: {
   repoUrl: string;
   setRepoUrl: (value: string) => void;
-  canStart: boolean;
+  // canStart: boolean;
   busy: boolean;
   status: string;
   error: string | null;
   onStart: () => void;
+  apiMode: ApiMode;
+  setApiMode: (mode: ApiMode) => void;
 }) {
-  const { repoUrl, setRepoUrl, canStart, busy, status, error, onStart } = props;
+  const {
+    repoUrl,
+    setRepoUrl,
+    busy,
+    status,
+    error,
+    onStart,
+    apiMode,
+    setApiMode,
+  } = props;
   const isLocked = busy || status === "Queued" || status === "Scanning";
   return (
     <Card className="border-muted/50">
@@ -58,6 +67,15 @@ export function ScanForm(props: {
                 "Start"
               )}
             </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Select a mode:</span>
+
+            <ApiModeSwitch
+              value={apiMode}
+              onChange={setApiMode}
+              disabled={busy}
+            />
           </div>
 
           {status !== "Idle" && (

@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator } from "@/features/system/components/ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { ShieldAlert } from "lucide-react";
 
 import { StatusBadge } from "@/features/scan/components/StatusBadge";
@@ -19,7 +19,9 @@ export default function Page() {
     criticals,
     error,
     busy,
-    canStart,
+    // canStart,
+    apiMode,
+    setApiMode,
     onStart,
   } = useScan();
 
@@ -56,7 +58,9 @@ export default function Page() {
       <ScanForm
         repoUrl={repoUrl}
         setRepoUrl={setRepoUrl}
-        canStart={canStart}
+        // canStart={canStart}
+        apiMode={apiMode}
+        setApiMode={setApiMode}
         busy={busy}
         status={status}
         error={error}

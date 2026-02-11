@@ -23,7 +23,7 @@ export class HttpClient {
 
   private normalizeError(error: unknown): Error {
     if (error instanceof AxiosError) {
-      const data = error.response?.data as any;
+      const data = error.response?.data;
       const message =
         data?.message ||
         data?.error ||

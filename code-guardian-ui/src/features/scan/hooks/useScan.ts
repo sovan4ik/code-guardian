@@ -1,11 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { _API } from "@/api";
-import type { ScanStatus, ScanStatusResponse, Vulnerability } from "@/types";
+import { _API, _GQL_API } from "@/api";
+import {
+  ApiMode,
+  ScanStatus,
+  ScanStatusResponse,
+  Vulnerability,
+} from "@/types";
 import { toast } from "sonner";
 
 const POLL_MS = 2000;
 
+function getClient(mode: ApiMode) {
+  return mode === ApiMode.GQL ? _GQL_API.scan : _API.scan;
+}
+
 export function useScan() {
+  const [apiMode, setApiMode] = useState<ApiMode>(ApiMode.REST);
+
   const [repoUrl, setRepoUrl] = useState(
     "https://github.com/sovan4ik/NodeGoat",
   );
@@ -30,8 +41,18 @@ export function useScan() {
     }
   }
 
+  useEffect(() => {
+    stopPolling();
+    setError(null);
+    setCriticals([]);
+    setStatus("Idle");
+    setScanId(null);
+    activeScanRef.current = null;
+  }, [apiMode]);
+
   async function pollOnce(id: string) {
-    const data: ScanStatusResponse = await _API.scan.getScanStatus(id);
+    const client = getClient(apiMode);
+    const data: ScanStatusResponse = await client.getScanStatus(id);
 
     if (activeScanRef.current !== id) return;
 
@@ -62,13 +83,15 @@ export function useScan() {
     try {
       stopPolling();
 
-      const res = await _API.scan.startScan(repoUrl.trim());
+      const client = getClient(apiMode);
+      const res = await client.startScan(repoUrl.trim());
+
       setScanId(res.scanId);
       activeScanRef.current = res.scanId;
       setStatus(res.status);
 
       toast.success("Scan started", {
-        description: `scanId: ${res.scanId}`,
+        description: `${apiMode} | scanId: ${res.scanId}`,
       });
 
       await pollOnce(res.scanId);
@@ -76,19 +99,19 @@ export function useScan() {
       timerRef.current = window.setInterval(() => {
         const id = activeScanRef.current;
         if (!id) return;
-        pollOnce(id).catch((e) => {
-          setError(e instanceof Error ? e.message : String(e));
+        pollOnce(id).catch((error) => {
+          setError(error instanceof Error ? error.message : String(error));
         });
       }, POLL_MS);
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      setError(msg);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      setError(message);
       setStatus("Idle");
       setScanId(null);
       activeScanRef.current = null;
 
       toast("Start failed", {
-        description: msg,
+        description: message,
       });
     } finally {
       setBusy(false);
@@ -100,6 +123,8 @@ export function useScan() {
   }, []);
 
   return {
+    apiMode,
+    setApiMode,
     repoUrl,
     setRepoUrl,
     scanId,

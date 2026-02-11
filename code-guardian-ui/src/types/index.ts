@@ -1,5 +1,10 @@
 export type ScanStatus = "Queued" | "Scanning" | "Finished" | "Failed";
 
+export enum ApiMode {
+  REST = "REST",
+  GQL = "GQL",
+}
+
 export interface Vulnerability {
   vulnerabilityId?: string;
   title?: string;

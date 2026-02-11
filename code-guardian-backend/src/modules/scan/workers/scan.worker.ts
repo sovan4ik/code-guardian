@@ -25,9 +25,8 @@ export class ScanWorker {
   ) {}
 
   async run(job: ScanJob): Promise<void> {
-    const { basePath, prefix } = _CONFIG.scan.workDir;
-    const { binaryPath, timeoutMs } = _CONFIG.tools.trivy;
-    const baseDir = await mkdtemp(path.join(basePath, prefix));
+    const { prefix } = _CONFIG.scan.workDir;
+    const baseDir = await mkdtemp(path.join(os.tmpdir(), prefix));
     const repoDir = path.join(baseDir, 'repo');
     const reportPath = path.join(baseDir, 'report.json');
 

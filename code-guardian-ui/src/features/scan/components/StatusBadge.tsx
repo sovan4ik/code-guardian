@@ -1,4 +1,4 @@
-import { Badge } from "@/features/system/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { CircleCheck, Clock, Search, XCircle } from "lucide-react";
 
 export function StatusBadge({ status }: { status: string }) {

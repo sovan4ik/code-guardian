@@ -1,18 +1,8 @@
 import { FastifyRequest, RouteOptions } from 'fastify';
-import ScanController from '../controllers/scan.controller';
 import { CreateScan, GetScan } from '../interfaces/req.interface';
-import { ScanService } from '../services/scan.service';
-import { CliRunner } from '../../common/runners/cli.runner';
-import { ScanWorker } from '../workers/scan.worker';
-import { ScanQueue } from '../queue/scan.queue';
+import { ScanContainer } from '../scan.container';
 
-const cli = new CliRunner();
-const scanService = new ScanService(({ scanId, repoUrl }) =>
-  queue.push({ scanId, repoUrl }),
-);
-const worker = new ScanWorker(cli, scanService);
-const queue = new ScanQueue(worker.run.bind(worker));
-const controller = new ScanController(scanService);
+const { controller } = ScanContainer;
 
 export const scanRoutes: RouteOptions[] = [
   {

@@ -19,7 +19,7 @@ class ScanController {
     return rep.code(200).send(result);
   }
 
-  public async getQueue(req: FastifyRequest<any>, rep: FastifyReply) {
+  public async getQueue(req: FastifyRequest, rep: FastifyReply) {
     return rep.code(200).send({
       queue: this.scanService.getQueue(),
     });

@@ -6,7 +6,10 @@ import { routers } from './app/routers';
 import _CONFIG from './config';
 
 const application = new FastifyApplication(
-  () => fastify({ logger: true }),
+  () =>
+    fastify({
+      // logger: true
+    }),
   {
     server: { host: _CONFIG.server.host, port: _CONFIG.server.port },
     routes: { globalPrefix: _CONFIG.app.routes.globalPrefix },

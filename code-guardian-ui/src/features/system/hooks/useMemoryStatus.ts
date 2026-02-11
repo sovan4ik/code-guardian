@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { _API } from "@/api";
 import type { MemoryStatus } from "@/types";
 
-const POLL_MS = 200;
+const POLL_MS = 500;
 const BACKOFF_MS = 10_000;
 const MAX_FAILS = 5;
 

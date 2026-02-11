@@ -1,3 +1,4 @@
+import { graphqlPlugin } from './plugins/graphql.plugin';
 import { PluginModule } from './types/server.type';
 import cors from '@fastify/cors';
 
@@ -11,4 +12,5 @@ export const plugins: PluginModule[] = [
       credentials: false,
     },
   },
+  { plugin: graphqlPlugin },
 ];

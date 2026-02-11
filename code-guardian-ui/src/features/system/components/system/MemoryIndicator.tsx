@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "../ui/card";
+import { Card } from "../../../../components/ui/card";
 import { useMemoryStatus } from "@/features/system/hooks/useMemoryStatus";
 
 export function MemoryIndicator() {

@@ -1,14 +1,14 @@
 import type { Vulnerability } from "@/types";
 
-import { Badge } from "@/features/system/components/ui/badge";
-import { Button } from "@/features/system/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/features/system/components/ui/card";
+} from "@/components/ui/card";
 
 import { ExternalLink } from "lucide-react";
 
