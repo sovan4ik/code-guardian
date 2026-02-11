@@ -1,0 +1,45 @@
+version: "3.9"
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  frontend:
+    build:
+      context: ./code-guardian-ui
+    container_name: frontend
+    # mem_limit: 200m
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:3001/api/v1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./code-guardian-backend
+    container_name: backend
+    # mem_limit: 200m
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=150
+      - NODE_ENV=production 
+      - APP_HOST=0.0.0.0
+      - APP_PORT=3001
+      - APP_ROUTES_GLOBAL_PREFIX=/api/v1
+      - SCAN_CONCURRENCY=1
+      - SCAN_WORKDIR_BASE=/tmp
+      - SCAN_WORKDIR_PREFIX=code-guardian-
+      - SCAN_SEVERITY=CRITICAL
+      - TRIVY_BIN_PATH=trivy
+      - TRIVY_TIMEOUT_MS=600000
+      - SCAN_MAX_REPORT_MB=1200000
+ 
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
+      

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only src/main.ts",
     "build": "tsc",
-    "start": "node --max-old-space-size=150 dist/main.js"
+    "start": "node dist/main.js"
   },
   "config": {
     "tsFiles": "{src,test}/**/*.ts"

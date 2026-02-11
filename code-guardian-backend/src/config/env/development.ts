@@ -16,7 +16,8 @@ const applicationDevelopmentConfig: Config = {
     concurrency: Number(process.env.SCAN_CONCURRENCY ?? 1),
     workDir: {
       basePath: process.env.SCAN_WORKDIR_BASE ?? '/tmp',
-      prefix: 'code-guardian-',
+      prefix: process.env.SCAN_WORKDIR_PREFIX
+       ?? 'code-guardian-',
     },
     severity: process.env.SCAN_SEVERITY ?? TrivySeverity.CRITICAL,
   },
